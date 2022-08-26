@@ -1,0 +1,19 @@
+{
+  "name": "product-inventory-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "ts-node": "ts-node ./src/app.ts",
+    "build": "tsc",
+    "start": "node ./dist/app.js",
+    "ts": "tsc -w",
+    "dev": "nodemon dist/app.js"
+  },
+  "author": "Irianto Kbarek",
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "^4.8.2"
+  }
+}
