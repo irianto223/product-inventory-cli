@@ -3,7 +3,7 @@
 import repl from 'repl'
 import { Context } from 'vm'
 import { getListProducts, addProduct } from './modules/product/handlers/cli_handler'
-import { addWarehouse, getListWarehouses, stock as addStock } from './modules/warehouse/handlers/cli_handler'
+import { addWarehouse, getListWarehouses, stock as addStock, unstock } from './modules/warehouse/handlers/cli_handler'
 
 const inputHandler = (input: string, context: Context, file: string, cb: (err: Error | null, result: any) => void) => {
   
@@ -23,6 +23,9 @@ const inputHandler = (input: string, context: Context, file: string, cb: (err: E
   }
   else if (params?.[0] === 'STOCK') {
     cb(null, addStock(params?.[1], params?.[2], Number(params?.[3])))
+  }
+  else if (params?.[0] === 'UNSTOCK') {
+    cb(null, unstock(params?.[1], params?.[2], Number(params?.[3])))
   }
   else {
     cb(null, undefined)

@@ -1,4 +1,4 @@
-import { add, stock as addStock } from '../repositories/commands/domain'
+import { add, stock as addStock, unstock as subtractStock } from '../repositories/commands/domain'
 import { getList } from '../repositories/queries/domain'
 import { validateCreate, validateStock } from '../utils/validator'
 
@@ -34,6 +34,20 @@ export const stock = (sku: string, warehouse_name: string, qty: number) => {
   }
 
   addStock({ sku, warehouse_name, qty }).catch(err => {
+    console.error(err)
+  })
+}
+
+export const unstock = (sku: string, warehouse_name: string, qty: number) => {
+
+  // input validation
+  const validationResult = validateStock({ sku, warehouse_name, qty })
+  if (validationResult.error) {
+    console.log(validationResult.error.message)
+    return
+  }
+
+  subtractStock({ sku, warehouse_name, qty }).catch(err => {
     console.error(err)
   })
 }

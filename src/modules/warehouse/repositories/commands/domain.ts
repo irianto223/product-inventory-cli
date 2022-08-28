@@ -61,3 +61,50 @@ export const stock = async (params: {
 
   return updateStock({ warehouse_name: params.warehouse_name, sku: params.sku, qty: selectedStock?.qty + qtyToAdd })
 }
+
+export const unstock = async (params: {
+  warehouse_name: string;
+  sku: string;
+  qty: number;
+}) => {
+
+  const findProduct = await findProductBySku(params.sku)
+  if (findProduct.length == 0) {
+    console.log(`Product with sku "${params.sku}" not found`)
+    return
+  }
+
+  const findWarehouse = await findByName(params.warehouse_name)
+  if (findWarehouse.length == 0) {
+    console.log(`Warehouse with name "${params.warehouse_name}" not found`)
+    return
+  }
+
+  const selectedStock = findWarehouse?.[0]?.stocks?.find((s: { [k: string]: any }) => s?.product?.sku == params.sku)
+  const totalCurrentStock: number = findWarehouse?.[0]?.stocks?.map?.((d: { [k: string]: any }) => d.qty)?.reduce?.((a: number, b: number) => a + b, 0)
+
+  if (!selectedStock) {
+    console.log('SKU not available on this Warehouse')
+    return
+  }
+
+  if (selectedStock.qty <= 0) {
+    console.log('Stock is empty')
+    return
+  }
+
+  if (totalCurrentStock <= 0) {
+    console.log('Warehouse stock is empty')
+    return
+  }
+
+  let qtyToSubtract
+  if (selectedStock?.qty - params.qty <= 0) {
+    qtyToSubtract = selectedStock?.qty
+  }
+  else {
+    qtyToSubtract = params.qty
+  }
+
+  return updateStock({ warehouse_name: params.warehouse_name, sku: params.sku, qty: selectedStock?.qty - qtyToSubtract })
+}
