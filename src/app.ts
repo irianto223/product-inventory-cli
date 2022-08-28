@@ -4,6 +4,7 @@ import repl from 'repl'
 import { Context } from 'vm'
 import { getListProducts, addProduct } from './modules/product/handlers/cli_handler'
 import { addWarehouse, getListWarehouses, stock as addStock, unstock, getDetailWarehouse } from './modules/warehouse/handlers/cli_handler'
+import { log } from './logger'
 
 const inputHandler = (input: string, context: Context, file: string, cb: (err: Error | null, result: any) => void) => {
   
@@ -36,6 +37,7 @@ const inputHandler = (input: string, context: Context, file: string, cb: (err: E
 }
 
 const replServer = repl.start({ prompt: '> ', eval: inputHandler })
-// const replServer = repl.start({ prompt: '> ' })
 
-// ADD PRODUCT "masdknasd aslkjnfas" 1234134
+process.stdin.addListener('data', (input) => {
+  log(input.toString())
+})
