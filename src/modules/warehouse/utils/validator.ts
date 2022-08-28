@@ -20,3 +20,12 @@ export const validateStock = (payload: { [k: string]: any }) => {
 
   return validSchema.validate(payload)
 }
+
+export const validateDetail = (payload: { [k: string]: any }) => {
+
+  const validSchema = joi.object({
+    warehouse_name: joi.string().required(),
+  }).label('detail warehouse')
+
+  return validSchema.validate(payload)
+}

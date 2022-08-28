@@ -1,6 +1,6 @@
 import { add, stock as addStock, unstock as subtractStock } from '../repositories/commands/domain'
-import { getList } from '../repositories/queries/domain'
-import { validateCreate, validateStock } from '../utils/validator'
+import { getList, getOneByName } from '../repositories/queries/domain'
+import { validateCreate, validateDetail, validateStock } from '../utils/validator'
 
 export const getListWarehouses = () => {
   getList().then(list => {
@@ -49,5 +49,25 @@ export const unstock = (sku: string, warehouse_name: string, qty: number) => {
 
   subtractStock({ sku, warehouse_name, qty }).catch(err => {
     console.error(err)
+  })
+}
+
+export const getDetailWarehouse = (warehouse_name: string) => {
+
+  // input validation
+  const validationResult = validateDetail({ warehouse_name })
+  if (validationResult.error) {
+    console.log(validationResult.error.message)
+    return
+  }
+
+  getOneByName(warehouse_name).then(warehouse => {
+    console.table(warehouse.stocks.map(w => ({
+      'ITEM NAME': w.product.name,
+      'ITEM SKU': w.product.sku,
+      'QTY': w.qty,
+    })))
+  }).catch(err => {
+    console.log(err?.toString())
   })
 }
