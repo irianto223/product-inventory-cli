@@ -14,13 +14,8 @@ To install dependencies run:
   npm install
 ```
 
-To build this project run:
 
-```bash
-  npm run build
-```
-
-To run this project run:
+To build & run this project run:
 
 ```bash
   npm start
