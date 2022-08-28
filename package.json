@@ -5,12 +5,9 @@
   "main": "dist/app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "ts-node": "ts-node ./src/app.ts",
-    "build": "tsc",
-    "start": "node ./dist/app.js",
-    "start:cli": "tsc && sudo npm uninstall --location=global product-inventory-app && sudo npm i --location=global",
     "ts": "tsc -w",
-    "dev": "nodemon dist/app.js"
+    "build": "tsc",
+    "start": "node ./dist/app.js"
   },
   "author": "Irianto Kbarek",
   "license": "ISC",
